@@ -104,6 +104,13 @@ while True:
         query = input("what you want to search?")
         result = wikipedia.summary(query)
         print(result)
+        
+    # searching in google        
+    elif "search in google" in a:
+`       x = input("What you want to search?")
+        print("searching for", x)
+        webbrowser.open("google.com/"+x)
+
 
 
 
