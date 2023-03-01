@@ -1,14 +1,17 @@
 # importing modules
 import os
+import smtplib
 import webbrowser
 import datetime
 import wikipedia
+import time
 
 # assistant name
 assistant_name = open("assistant name.txt", "r")
 
 # welcome message
 print("Hi this is", assistant_name.read())
+
 
 # while loop for looping the program
 while True:
@@ -20,7 +23,7 @@ while True:
     if "hi" in a:
         print("how can i help you?")
 
-    # user name
+    # username
     elif "what is my name" in a:
         user_name = open("name.txt", "r")
         print(user_name.read())
@@ -48,16 +51,18 @@ while True:
     # opening browser
     elif "open browser" in a:
         print("Opening browser....")
-        webbrowser.open("google.com")
+        time.sleep(1)
+        webbrowser.open("www.google.com")
 
     # opening spotify to listen to music
-    elif "music" in a:
+    elif "listen music" in a:
         print("opening spotify...")
+        time.sleep(1)
         webbrowser.open("www.spotify.com")
 
     # changing user name
     elif "change my name" in a:
-        x = input("what's your new name:")
+        x = a.replace("change my name to ", "")
         f = open("name.txt", "w")
         f.write(x)
         f.close()
@@ -65,7 +70,7 @@ while True:
 
     # changing assistant name
     elif "change your name" in a:
-        x = input("what new name you want to give me?  ")
+        x = a.replace("change your name to ", "")
         f = open("assistant name.txt", "w")
         f.write(x)
         f.close()
@@ -79,20 +84,23 @@ while True:
         else:
             print("command denied")
 
-    # search in  youtube
-    elif "search video" in a:
-        video = input("what you want to see :")
+    # search in  YouTube
+    elif "search in youtube" in a:
+        video = a.replace("search in youtube for", "")
         print("searching on youtube for ", video)
+        time.sleep(1)
         webbrowser.open("https://www.youtube.com/results?search_query=" + video)
 
     # opening youtube
     elif "youtube" in a:
         print("opening youtube...")
+        time.sleep(1)
         webbrowser.open("www.youtube.com")
 
     # opening instagram
     elif "instagram" in a:
         print("opening instagram")
+        time.sleep(1)
         webbrowser.open("instagram .com")
 
     # telling location
@@ -101,46 +109,34 @@ while True:
 
     # searching in wikipedia
     elif "search in wikipedia" in a:
-        query = input("what you want to search?")
-        result = wikipedia.summary(query)
+        a = a.replace("search in wikipedia for", "")
+        print(wikipedia.search(a, results=4))
+        result = wikipedia.summary(a, sentences=1)
         print(result)
-        
+
     # searching in google        
     elif "search in google" in a:
-`       x = input("What you want to search?")
-        print("searching for", x)
-        webbrowser.open("google.com/"+x)
+        a = a.replace("search is google for ", "")
+        print("searching for ", a)
+        time.sleep(1)
+        webbrowser.open("https://www.google.com/search?q=" + a)
+
+    # sending mail
+    elif "send mail to" in a:
+        reciever = a.replace("send mail to", "")
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+
+        s.starttls()
+
+        # Authentication
+        s.login("sabiwaraich206@gmail.com", "sehbaz @@ singh")
+
+        # message to be sent
+        message = input("what you want to send?")
+
+        # sending the mail
+        s.sendmail("sabiwaraich206@gmail.com", reciever, message)
+
+        s.quit()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    else:
-        print("sorry,please enter a valid command")
